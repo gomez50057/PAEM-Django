@@ -9,9 +9,9 @@ class Formulario(models.Model):
     telefono = models.CharField(max_length=20)
     extension = models.CharField(max_length=10, blank=True, null=True)
     correo = models.EmailField()
-    nombre_acuerdo = models.CharField(max_length=250)
+    descripcion_acuerdo = models.TextField(max_length=5000)  # Campo actualizado
     descripcion_avance = models.TextField(max_length=5000)
     documentos = models.FileField(upload_to='documentos/', blank=True, null=True)
 
     def __str__(self):
-        return f'{self.nombre} {self.apellido_paterno} - {self.nombre_acuerdo}'
+        return f'{self.nombre} {self.apellido_paterno} - {self.descripcion_acuerdo}'
