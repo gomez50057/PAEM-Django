@@ -1,0 +1,26 @@
+
+Django/
+├── paemDjango/
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── asgi.py
+│   └── wsgi.py
+├── manage.py
+├── venv/  # Entorno virtual
+└── requirements.txt  # Dependencias del proyecto
+Next/
+├── paem-Next/
+│   ├── Todo el froenend ....
+
+
+
+
+Resumen de las rutas:
+Formularios:
+
+GET /formularios/ - Listar todos los formularios
+POST /formularios/ - Crear un nuevo formulario
+GET /formularios/{id}/ - Obtener un formulario específico
+PUT /formularios/{id}/ - Actualizar un formulario existente
+DELETE /formularios/{id}/ - Eliminar un formulario
