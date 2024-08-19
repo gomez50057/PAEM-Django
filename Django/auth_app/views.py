@@ -26,7 +26,11 @@ def registro(request):
                 results.append({'username': username, 'status': 'error', 'message': 'Faltan campos obligatorios'})
                 continue
 
-            if User.objects.filter(username=username).exists():
+            if User.objects.filtLANGUAGE_CODE = 'es'
+TIME_ZONE = 'America/Mexico_City'
+USE_I18N = True
+USE_L10N = True
+USE_TZ = Trueer(username=username).exists():
                 results.append({'username': username, 'status': 'error', 'message': 'El usuario ya existe'})
                 continue
 
@@ -40,10 +44,6 @@ def registro(request):
                 continue
 
             user.groups.add(group)
-            
-            # Aquí podrías guardar `estado` y `comision` en un perfil de usuario si es necesario
-            # Por ejemplo, si tienes un modelo de perfil relacionado con el usuario:
-            # UserProfile.objects.create(user=user, estado=estado, comision=comision)
 
             results.append({'username': username, 'status': 'ok', 'message': 'Usuario registrado exitosamente'})
 
