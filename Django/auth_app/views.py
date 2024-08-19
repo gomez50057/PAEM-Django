@@ -26,11 +26,7 @@ def registro(request):
                 results.append({'username': username, 'status': 'error', 'message': 'Faltan campos obligatorios'})
                 continue
 
-            if User.objects.filtLANGUAGE_CODE = 'es'
-TIME_ZONE = 'America/Mexico_City'
-USE_I18N = True
-USE_L10N = True
-USE_TZ = Trueer(username=username).exists():
+            if User.objects.filter(username=username).exists():
                 results.append({'username': username, 'status': 'error', 'message': 'El usuario ya existe'})
                 continue
 
