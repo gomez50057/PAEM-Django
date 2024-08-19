@@ -24,3 +24,6 @@ POST /formularios/ - Crear un nuevo formulario
 GET /formularios/{id}/ - Obtener un formulario específico
 PUT /formularios/{id}/ - Actualizar un formulario existente
 DELETE /formularios/{id}/ - Eliminar un formulario
+
+
+POST /auth/registro/
