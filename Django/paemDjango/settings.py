@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'forms',
+    'auth_app',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
