@@ -42,6 +42,10 @@ class Acuerdo(models.Model):
 class Actualizacion(models.Model):
     acuerdo = models.ForeignKey(Acuerdo, on_delete=models.CASCADE, related_name='actualizaciones')
     fecha_actualizacion = models.DateField(auto_now_add=True)
+    descripcion_avance = models.TextField(max_length=5000)
+    documentos = models.FileField(upload_to='documentos/', blank=True, null=True)
+    version = models.IntegerField(editable=False)  # Marcamos como no editable
+
     nombre = models.CharField(max_length=100)
     apellido_paterno = models.CharField(max_length=100)
     apellido_materno = models.CharField(max_length=100)
@@ -49,9 +53,13 @@ class Actualizacion(models.Model):
     telefono = models.CharField(max_length=20)
     extension = models.CharField(max_length=10, blank=True, null=True)
     correo = models.EmailField()
-    descripcion_avance = models.TextField(max_length=5000)
-    documentos = models.FileField(upload_to='documentos/', blank=True, null=True)
-    version = models.IntegerField()
+
+    def save(self, *args, **kwargs):
+        if not self.version:
+            # Calculamos la versión en función del número de actualizaciones existentes para este acuerdo
+            self.version = self.acuerdo.actualizaciones.count() + 1
+        
+        super(Actualizacion, self).save(*args, **kwargs)
 
     def __str__(self):
         return f'Actualización {self.version} para Acuerdo {self.acuerdo.id_unico} - {self.descripcion_avance}'
