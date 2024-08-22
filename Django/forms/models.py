@@ -30,9 +30,8 @@ class Acuerdo(models.Model):
             current_year = datetime.date.today().year
             commission_siglas = "SC"  # Aquí deberías obtener dinámicamente las siglas de la comisión
             total_acuerdos = Acuerdo.objects.filter(fecha_creacion__year=current_year).count() + 1
-            version = 1 if not self.acuerdo_original else self.acuerdo_original.versiones.count() + 1
 
-            self.id_unico = f"AC{current_year}-{commission_siglas}-{total_acuerdos:03d}-{version:02d}"
+            self.id_unico = f"AC{current_year}-{commission_siglas}-{total_acuerdos:03d}"
         
         super(Acuerdo, self).save(*args, **kwargs)
 
