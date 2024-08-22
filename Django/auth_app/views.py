@@ -2,6 +2,7 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 import json
 from .models import UserProfile  # Asegúrate de importar el modelo
 
@@ -64,3 +65,23 @@ def inicio_sesion(request):
             return JsonResponse({'status': 'error', 'message': 'Credenciales inválidas'}, status=400)
     else:
         return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
+
+@login_required
+def current_user(request):
+    user = request.user
+    try:
+        profile = user.userprofile
+        user_data = {
+            'username': user.username,
+            'groups': list(user.groups.values_list('name', flat=True)),
+            'estado': profile.estado,
+            'comision': profile.comision,
+        }
+    except UserProfile.DoesNotExist:
+        user_data = {
+            'username': user.username,
+            'groups': list(user.groups.values_list('name', flat=True)),
+            'estado': None,
+            'comision': None,
+        }
+    return JsonResponse(user_data)

@@ -1,10 +1,7 @@
 from django.contrib import admin
-from .models import Formulario
+from .models import Acuerdo, Actualizacion  # Actualiza esta línea con los nuevos modelos
 
-class FormularioAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'apellido_paterno', 'apellido_materno', 'area_adscripcion', 'fecha')
-    search_fields = ('nombre', 'apellido_paterno', 'apellido_materno', 'area_adscripcion')
-    list_filter = ('fecha', 'area_adscripcion')
-    readonly_fields = ('fecha',)
+# Registra los modelos en el admin
+admin.site.register(Acuerdo)
+admin.site.register(Actualizacion)
 
-admin.site.register(Formulario, FormularioAdmin)

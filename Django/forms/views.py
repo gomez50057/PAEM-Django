@@ -1,8 +1,11 @@
 from rest_framework import viewsets
-from .models import Formulario
-from .serializers import FormularioSerializer
+from .models import Acuerdo, Actualizacion
+from .serializers import AcuerdoSerializer, ActualizacionSerializer
 
-class FormularioViewSet(viewsets.ModelViewSet):
-    queryset = Formulario.objects.all()
-    serializer_class = FormularioSerializer
+class AcuerdoViewSet(viewsets.ModelViewSet):
+    queryset = Acuerdo.objects.all()
+    serializer_class = AcuerdoSerializer
 
+class ActualizacionViewSet(viewsets.ModelViewSet):
+    queryset = Actualizacion.objects.all()
+    serializer_class = ActualizacionSerializer
