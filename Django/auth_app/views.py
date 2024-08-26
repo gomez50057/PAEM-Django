@@ -60,7 +60,17 @@ def inicio_sesion(request):
         if user is not None:
             login(request, user)
             group = user.groups.first().name if user.groups.exists() else 'sin grupo'
-            return JsonResponse({'status': 'ok', 'group': group})
+
+            # Obtenemos el perfil del usuario
+            profile = user.userprofile  # Asegúrate de que el perfil siempre existe
+
+            return JsonResponse({
+                'status': 'ok',
+                'group': group,
+                'username': user.username,
+                'estado': profile.estado,
+                'comision': profile.comision
+            })
         else:
             return JsonResponse({'status': 'error', 'message': 'Credenciales inválidas'}, status=400)
     else:
