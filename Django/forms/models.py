@@ -14,7 +14,6 @@ class Acuerdo(models.Model):
     estatus = models.CharField(max_length=50, choices=ESTATUS_CHOICES, default='en_proceso')
     acuerdo_original = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='versiones')
 
-    # Campos nuevos para Estado y Comisión
     estado = models.CharField(max_length=100, blank=True, null=True)
     comision = models.CharField(max_length=100, blank=True, null=True)
 
@@ -32,7 +31,9 @@ class Acuerdo(models.Model):
     def save(self, *args, **kwargs):
         if not self.id_unico:
             current_year = datetime.date.today().year
-            commission_siglas = self.comision[:2].upper() if self.comision else "SC"  # Obtener siglas de la comisión de forma dinámica
+            commission_siglas = self.comision if self.comision else "SC"  # Usar la comisión directamente
+
+            # Asegúrate de contar solo los acuerdos con el mismo año
             total_acuerdos = Acuerdo.objects.filter(fecha_creacion__year=current_year).count() + 1
 
             # Evitar duplicados incrementando hasta encontrar un ID único
@@ -42,7 +43,7 @@ class Acuerdo(models.Model):
                 potential_id_unico = f"AC{current_year}-{commission_siglas}-{total_acuerdos:03d}"
 
             self.id_unico = potential_id_unico
-
+        
         super(Acuerdo, self).save(*args, **kwargs)
 
 class Actualizacion(models.Model):
