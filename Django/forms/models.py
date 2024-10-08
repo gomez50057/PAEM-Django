@@ -1,5 +1,17 @@
 from django.db import models
 import datetime
+import os
+
+def upload_to_documentos(instance, filename):
+    if not instance.id_unico:
+        instance.save()
+    return os.path.join('acuerdos', instance.id_unico, 'documentos', filename)
+
+def upload_to_minuta(instance, filename):
+    if not instance.id_unico:
+        instance.save()
+    return os.path.join('acuerdos', instance.id_unico, 'minuta', filename)
+
 
 class Acuerdo(models.Model):
     ESTATUS_CHOICES = [
@@ -10,7 +22,7 @@ class Acuerdo(models.Model):
     ]
 
     id_unico = models.CharField(max_length=255, unique=True, editable=False)
-    fecha_creacion = models.DateField(auto_now_add=True)
+    fecha_creacion = models.DateField(null=True, blank=True)
     estatus = models.CharField(max_length=50, choices=ESTATUS_CHOICES, default='en_proceso')
     acuerdo_original = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='versiones')
 
@@ -26,24 +38,25 @@ class Acuerdo(models.Model):
     correo = models.EmailField()
     descripcion_acuerdo = models.TextField(max_length=5000)
     descripcion_avance = models.TextField(max_length=5000, blank=True, null=True)
-    documentos = models.FileField(upload_to='documentos/', blank=True, null=True)
+    
+    # Ajustamos los campos FileField con las nuevas funciones de ruta
+    documentos = models.FileField(upload_to=upload_to_documentos, blank=True, null=True)
+    minuta = models.FileField(upload_to=upload_to_minuta, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         if not self.id_unico:
             current_year = datetime.date.today().year
-            commission_siglas = self.comision if self.comision else "SC"  # Usar la comisión directamente
+            commission_siglas = self.comision if self.comision else "SC"
 
-            # Asegúrate de contar solo los acuerdos con el mismo año
             total_acuerdos = Acuerdo.objects.filter(fecha_creacion__year=current_year).count() + 1
 
-            # Evitar duplicados incrementando hasta encontrar un ID único
             potential_id_unico = f"AC{current_year}-{commission_siglas}-{total_acuerdos:03d}"
             while Acuerdo.objects.filter(id_unico=potential_id_unico).exists():
                 total_acuerdos += 1
                 potential_id_unico = f"AC{current_year}-{commission_siglas}-{total_acuerdos:03d}"
 
             self.id_unico = potential_id_unico
-        
+
         super(Acuerdo, self).save(*args, **kwargs)
 
 class Actualizacion(models.Model):
