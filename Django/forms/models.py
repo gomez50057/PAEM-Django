@@ -3,7 +3,7 @@ import datetime
 import os
 
 # Genera la ruta de subida para documentos o minuta:
-# acuerdos/id_unico/documentos o minuta/archivo
+# acuerdos/id_unico/original/documentos o minuta/archivo
 
 def upload_to_documentos(instance, filename):
     if not instance.id_unico:
