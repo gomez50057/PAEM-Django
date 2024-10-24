@@ -31,20 +31,22 @@ class Acuerdo(models.Model):
         ('atendido', 'Atendido'),
         ('cancelado', 'Cancelado')
     ]
+
+    ZM_CHOICES = [
+        ('ZMVM', 'Valle de México'),
+        ('ZMPachuca', 'Pachuca'),
+        ('ZMTulancingo', 'Tulancingo'),
+        ('ZMTula', 'Tula'),
+        ('no_aplica', 'No Aplica')
+    ]
+    
     comision = models.CharField(max_length=100, blank=True, null=True)
 
     id_unico = models.CharField(max_length=255, unique=True, editable=False)
     fecha_creacion = models.DateField(null=True, blank=True)
     estatus = models.CharField(max_length=50, choices=ESTATUS_CHOICES, default='en_proceso')
 
-    # Un solo acuerdo sin duplicación por estado
-    nombre = models.CharField(max_length=100)
-    apellido_paterno = models.CharField(max_length=100)
-    apellido_materno = models.CharField(max_length=100)
-    area_adscripcion = models.CharField(max_length=150)
-    telefono = models.CharField(max_length=20)
-    extension = models.CharField(max_length=10, blank=True, null=True)
-    correo = models.EmailField()
+    ZM = models.CharField(max_length=50, choices=ZM_CHOICES, default='no_aplica')
     descripcion_acuerdo = models.TextField(max_length=5000)
 
     # Archivos globales para el acuerdo
@@ -69,7 +71,7 @@ class Acuerdo(models.Model):
         super(Acuerdo, self).save(*args, **kwargs)
 
     def __str__(self):
-        return f"Acuerdo {self.id_unico} - {self.nombre}"
+        return f"Acuerdo {self.id_unico}"
 
 # Modelo de Actualización
 class Actualizacion(models.Model):
