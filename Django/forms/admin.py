@@ -8,6 +8,6 @@ class AcuerdoAdmin(admin.ModelAdmin):
 
 @admin.register(Actualizacion)
 class ActualizacionAdmin(admin.ModelAdmin):
-    list_display = ('acuerdo', 'estado', 'version', 'fecha_actualizacion', 'estatus_avance')
+    list_display = ('acuerdo', 'estado', 'version', 'fecha_actualizacion')
     search_fields = ('acuerdo', 'estado')
-    list_filter = ('acuerdo', 'estado', 'estatus_avance')
+    list_filter = ('acuerdo', 'estado')
