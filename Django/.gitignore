@@ -1,0 +1,40 @@
+# Entorno virtual
+venv/
+env/
+
+# Archivos de entorno
+.env
+
+# Archivos de configuración de Django
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Archivos de logs
+*.log
+
+# Archivos de compilación
+*.pyc
+
+# Archivos y carpetas de caché
+*.cache
+*.mo
+*.pot
+
+# Archivos de configuración del IDE
+.vscode/
+.idea/
+
+# Archivos de configuración de OS
+.DS_Store
+Thumbs.db
+
+# Archivos de cobertura de pruebas
+htmlcov/
+.coverage
+.tox/
+.pytest_cache/
+
+# Archivos de estáticos y recolectados (Django collectstatic)
+# staticfiles/
+# media/

@@ -46,7 +46,7 @@ class Acuerdo(models.Model):
     fecha_creacion = models.DateField(null=True, blank=True)
     estatus = models.CharField(max_length=50, choices=ESTATUS_CHOICES, default='en_proceso')
 
-    zm = models.CharField(max_length=50, choices=ZM_CHOICES, default='no_aplica')
+    zm = models.CharField(max_length=50, choices=ZM_CHOICES)
     descripcion_acuerdo = models.TextField(max_length=5000)
 
     # Archivos globales para el acuerdo
